@@ -4,26 +4,29 @@ Este proyecto es una aplicación full‑stack que permite a usuarios autenticado
 
 ## 📦 Estructura
 
-├── backend/ # Servidor FastAPI
-│ ├── app/
-│ │ ├── auth/ # Lógica de JWT, dependencias
-│ │ ├── database.py # Conexión y get_db()
-│ │ ├── models/ # SQLAlchemy ORM
-│ │ ├── routes/ # FastAPI routers
-│ │ ├── schemas/ # Pydantic schemas
-│ │ └── main.py # Punto de entrada
-│ ├── env/ # Virtualenv (no versionar)
-│ └── .env # Variables de entorno
-└── frontend/ # Cliente React (Vite)
-├── public/
-├── src/
-│ ├── api/ # Llamadas a la API
-│ ├── auth/ # Contexto de autenticación
-│ ├── assets/ # Imágenes / SVGs
-│ ├── pages/ # Vistas (Login, Register, Dashboard…)
-│ └── App.jsx
-├── index.html
-└── package.json
+```
+├── backend/               # Servidor FastAPI  
+│   ├── app/  
+│   │   ├── auth/          # Lógica de JWT, dependencias  
+│   │   ├── database.py    # Conexión y get_db()  
+│   │   ├── models/        # SQLAlchemy ORM  
+│   │   ├── routes/        # FastAPI routers  
+│   │   ├── schemas/       # Pydantic schemas  
+│   │   └── main.py        # Punto de entrada  
+│   ├── env/               # Virtualenv (no versionar)  
+│   └── .env               # Variables de entorno  
+└── frontend/              # Cliente React (Vite)  
+    ├── public/  
+    ├── src/  
+    │   ├── api/           # Llamadas a la API  
+    │   ├── auth/          # Contexto de autenticación  
+    │   ├── assets/        # Imágenes / SVGs  
+    │   ├── pages/         # Vistas (Login, Register, Dashboard…)  
+    │   └── App.jsx  
+    ├── index.html  
+    └── package.json
+```
+
 
 ## Características
 
