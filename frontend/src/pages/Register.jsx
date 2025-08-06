@@ -1,32 +1,71 @@
-import { useState } from 'react'
-import { registerUser } from '../api/auth'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../auth/AuthContext";
+import "../App.css";                         
+import illustration from "../assets/undraw_sign_up.svg";
 
 export default function Register() {
-  const [form, setForm] = useState({ email: '', password: '', role: 'USER' })
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+ 
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  // Si ya hay user, redirige
+  useEffect(() => {
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await registerUser(form)
-      alert('Usuario creado')
-      navigate('/')
+      await axios.post("http://127.0.0.1:8000/auth/register", {
+        email,
+        password,
+ 
+      });
+      alert("Registro exitoso. Por favor inicia sesión.");
+      navigate("/login", { replace: true });
     } catch (err) {
-      alert('Error: ' + err.response?.data?.detail || 'Error en el registro')
+      console.error(err);
+      alert("Error al registrar. Revisa la consola.");
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Registro</h2>
-      <input placeholder="Email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
-      <input type="password" placeholder="Password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
-      <select value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}>
-        <option value="USER">Usuario</option>
-        <option value="ADMIN">Admin</option>
-      </select>
-      <button type="submit">Registrarme</button>
-    </form>
-  )
+    <div className="auth-page">
+      {/* Ilustracion */}
+      <div
+        className="login-illustration"
+        style={{ backgroundImage: `url(${illustration})` }}
+      />
+
+      {/* Formulario */}
+      <div className="auth-card">
+        <h1>Registro</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+      
+          <button type="submit">Registrarme</button>
+        </form>
+        <div className="auth-links">
+          <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum
 from app.database import Base
+from sqlalchemy.orm import relationship
 import enum
 
 class RoleEnum(str, enum.Enum):
@@ -13,3 +14,4 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     role = Column(Enum(RoleEnum), default=RoleEnum.USER)
+    certificates = relationship("Certificate", back_populates="user")
